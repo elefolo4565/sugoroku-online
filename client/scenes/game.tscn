@@ -1,0 +1,184 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3game"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="TopBar" type="HBoxContainer" parent="UILayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TurnLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = ""
+
+[node name="PlayerInfoPanel" type="VBoxContainer" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = 300.0
+grow_horizontal = 0
+theme_override_constants/separation = 8
+
+[node name="PanelTitle" type="Label" parent="UILayer/PlayerInfoPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+text = "プレイヤー情報"
+
+[node name="PlayerInfo1" type="Label" parent="UILayer/PlayerInfoPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="PlayerInfo2" type="Label" parent="UILayer/PlayerInfoPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="PlayerInfo3" type="Label" parent="UILayer/PlayerInfoPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="PlayerInfo4" type="Label" parent="UILayer/PlayerInfoPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="DiceButton" type="Button" parent="UILayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -80.0
+offset_right = 125.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 28
+text = "サイコロを振る"
+visible = false
+
+[node name="DiceResultLabel" type="Label" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 80.0
+offset_right = 100.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EventPopup" type="PanelContainer" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -80.0
+offset_right = 200.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+visible = false
+
+[node name="EventVBox" type="VBoxContainer" parent="UILayer/EventPopup"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="EventText" type="Label" parent="UILayer/EventPopup/EventVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="EventAmountLabel" type="Label" parent="UILayer/EventPopup/EventVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = ""
+horizontal_alignment = 1
+
+[node name="EventOKButton" type="Button" parent="UILayer/EventPopup/EventVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "OK"
+
+[node name="BranchPopup" type="PanelContainer" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -90.0
+offset_right = 180.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+visible = false
+
+[node name="BranchVBox" type="VBoxContainer" parent="UILayer/BranchPopup"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BranchLabel" type="Label" parent="UILayer/BranchPopup/BranchVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "どちらの道を進む？"
+horizontal_alignment = 1
+
+[node name="BranchButton1" type="Button" parent="UILayer/BranchPopup/BranchVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(250, 45)
+theme_override_font_sizes/font_size = 22
+text = "ルート1"
+
+[node name="BranchButton2" type="Button" parent="UILayer/BranchPopup/BranchVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(250, 45)
+theme_override_font_sizes/font_size = 22
+text = "ルート2"
+
+[node name="CountdownLabel" type="Label" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -60.0
+offset_right = 100.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1

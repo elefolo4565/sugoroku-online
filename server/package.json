@@ -1,0 +1,12 @@
+{
+  "name": "sugoroku-online-server",
+  "version": "1.0.0",
+  "description": "Sugoroku Online WebSocket Game Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}

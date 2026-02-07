@@ -1,0 +1,20 @@
+# Godot
+.godot/
+*.import
+client/export/
+
+# Node.js
+server/node_modules/
+server/package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# IDE
+.vscode/
+*.swp
+
+# Claude
+.claude/

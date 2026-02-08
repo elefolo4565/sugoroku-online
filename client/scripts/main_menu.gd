@@ -25,7 +25,7 @@ func _on_create_pressed() -> void:
 		return
 	_pending_action = "create"
 	_set_buttons_disabled(true)
-	status_label.text = "サーバーに接続中..."
+	status_label.text = "サーバーに接続中...（初回は30秒ほどかかります）"
 	WebSocketClient.connected.connect(_on_connected, CONNECT_ONE_SHOT)
 	WebSocketClient.disconnected.connect(_on_connection_failed, CONNECT_ONE_SHOT)
 	WebSocketClient.connect_to_server()
@@ -41,7 +41,7 @@ func _on_join_pressed() -> void:
 		return
 	_pending_action = "join"
 	_set_buttons_disabled(true)
-	status_label.text = "サーバーに接続中..."
+	status_label.text = "サーバーに接続中...（初回は30秒ほどかかります）"
 	WebSocketClient.connected.connect(_on_connected, CONNECT_ONE_SHOT)
 	WebSocketClient.disconnected.connect(_on_connection_failed, CONNECT_ONE_SHOT)
 	WebSocketClient.connect_to_server()
@@ -49,7 +49,8 @@ func _on_join_pressed() -> void:
 func _on_connected() -> void:
 	if WebSocketClient.disconnected.is_connected(_on_connection_failed):
 		WebSocketClient.disconnected.disconnect(_on_connection_failed)
-	WebSocketClient.message_received.connect(_on_message, CONNECT_ONE_SHOT)
+	status_label.text = "接続完了。ルーム処理中..."
+	WebSocketClient.message_received.connect(_on_message)
 	var player_name = _get_player_name()
 	GameState.player_name = player_name
 	if _pending_action == "create":
@@ -62,18 +63,21 @@ func _on_message(data: Dictionary) -> void:
 	var msg_type = data.get("type", "")
 	match msg_type:
 		"room_created":
+			_cleanup_signals()
 			GameState.room_code = data.get("code", "")
 			GameState.player_index = 0
 			GameState.is_host = true
 			GameState.players = data.get("players", [])
 			get_tree().change_scene_to_file("res://scenes/lobby.tscn")
 		"room_joined":
+			_cleanup_signals()
 			GameState.room_code = data.get("code", "")
 			GameState.player_index = int(data.get("player_index", 0))
 			GameState.is_host = false
 			GameState.players = data.get("players", [])
 			get_tree().change_scene_to_file("res://scenes/lobby.tscn")
 		"room_error":
+			_cleanup_signals()
 			status_label.text = data.get("message", "エラーが発生しました")
 			_set_buttons_disabled(false)
 			WebSocketClient.close()
@@ -81,7 +85,7 @@ func _on_message(data: Dictionary) -> void:
 func _on_connection_failed() -> void:
 	if WebSocketClient.connected.is_connected(_on_connected):
 		WebSocketClient.connected.disconnect(_on_connected)
-	status_label.text = "接続に失敗しました"
+	status_label.text = "接続に失敗しました。再試行してください。"
 	_set_buttons_disabled(false)
 
 func _get_player_name() -> String:
@@ -93,3 +97,10 @@ func _get_player_name() -> String:
 func _set_buttons_disabled(disabled: bool) -> void:
 	create_button.disabled = disabled
 	join_button.disabled = disabled
+
+func _cleanup_signals() -> void:
+	if WebSocketClient.message_received.is_connected(_on_message):
+		WebSocketClient.message_received.disconnect(_on_message)
+
+func _exit_tree() -> void:
+	_cleanup_signals()

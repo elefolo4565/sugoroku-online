@@ -68,7 +68,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'GET' && req.url === '/status') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ rooms: rooms.size, max_rooms: MAX_ROOMS }));
+    res.end(JSON.stringify({ rooms: rooms.size, max_rooms: MAX_ROOMS, version: 2 }));
   } else {
     res.writeHead(404);
     res.end();
